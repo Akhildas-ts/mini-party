@@ -9,7 +9,7 @@ services:
     region: oregon
     plan: free
     autoDeploy: true
-    healthCheckPath: /book
+    healthCheckPath: /health
 
     envVars:
       # 1. Pulls your Turso URL and Token from the group you created

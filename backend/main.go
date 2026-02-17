@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 
@@ -31,6 +32,15 @@ func main() {
 		AllowHeaders:     []string{"Content-Type", "X-Admin-Token"},
 		AllowCredentials: true,
 	}))
+
+	// Health check — used by Render and Docker HEALTHCHECK
+	r.GET("/health", func(c *gin.Context) {
+		if err := db.DB.Ping(); err != nil {
+			c.JSON(http.StatusServiceUnavailable, gin.H{"status": "unhealthy", "error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"status": "ok"})
+	})
 
 	// API routes
 	r.POST("/book", handlers.CreateBooking)
