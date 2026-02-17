@@ -12,17 +12,13 @@ services:
     healthCheckPath: /health
 
     envVars:
-      # 1. Pulls your Turso URL and Token from the group you created
-      - fromGroup: miniparty_backend 
+      # Pulls TURSO_DATABASE_URL, TURSO_AUTH_TOKEN, and ADMIN_SECRET from the env group
+      - fromGroup: miniparty_backend
 
-      # 2. Admin access token (set manually in Render dashboard)
-      - key: ADMIN_SECRET
-        value: ""
-
-      # 3. Your Vercel URL (Update this if your Vercel URL changes)
+      # Your Vercel URL (must match exactly, no trailing slash)
       - key: CORS_ORIGIN
         value: https://mini-party.vercel.app
 
-      # 4. Gin production settings
+      # Gin production mode
       - key: GIN_MODE
         value: release
