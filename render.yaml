@@ -12,8 +12,12 @@ services:
     healthCheckPath: /health
 
     envVars:
-      # Pulls TURSO_DATABASE_URL, TURSO_AUTH_TOKEN, and ADMIN_SECRET from the env group
+      # Pulls TURSO_DATABASE_URL and TURSO_AUTH_TOKEN from the env group
       - fromGroup: miniparty_backend
+
+      # Admin password for the dashboard
+      - key: ADMIN_SECRET
+        value: anildas@123
 
       # Your Vercel URL (must match exactly, no trailing slash)
       - key: CORS_ORIGIN
