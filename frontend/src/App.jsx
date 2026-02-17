@@ -13,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/book" element={<BookingForm />} />
         <Route path="/confirmation" element={<Confirmation />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/manage-bookings" element={<AdminDashboard />} />
       </Routes>
     </div>

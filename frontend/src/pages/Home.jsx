@@ -42,14 +42,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Gallery Placeholder */}
+      {/* Our Space */}
       <section className="bg-white py-20">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">
             Our Space
           </h2>
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            A cozy, intimate space perfect for small meetings, spending quality
+            time with friends, or hosting small birthday events.
+          </p>
           <div className="grid md:grid-cols-3 gap-6">
-            {['Party Setup', 'Dance Floor', 'Lounge Area'].map((label) => (
+            {['Party Setup', 'Cozy Corner', 'Lounge Area'].map((label) => (
               <div
                 key={label}
                 className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl h-56 flex items-center justify-center text-purple-500 text-lg font-medium"
@@ -76,6 +80,25 @@ export default function Home() {
           Book Your Party
         </Link>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-300 py-12">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h3 className="text-xl font-bold text-white mb-2">
+            Anil New Icespot Palakkad
+          </h3>
+          <p className="text-gray-400 mb-4">Owner: Anil Das</p>
+          <p className="text-gray-400 mb-2">Icespot, Palakkad</p>
+          <p>
+            <a
+              href="tel:9074696823"
+              className="text-purple-400 hover:text-purple-300 transition font-medium"
+            >
+              9074696823
+            </a>
+          </p>
+        </div>
+      </footer>
     </main>
   )
 }

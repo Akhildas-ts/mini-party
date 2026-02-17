@@ -15,9 +15,9 @@ services:
       # 1. Pulls your Turso URL and Token from the group you created
       - fromGroup: miniparty_backend 
 
-      # 2. Random secret for admin access (Render creates this for you)
+      # 2. Admin access token (set manually in Render dashboard)
       - key: ADMIN_SECRET
-        generateValue: true
+        value: ""
 
       # 3. Your Vercel URL (Update this if your Vercel URL changes)
       - key: CORS_ORIGIN
