@@ -1,0 +1,5 @@
+miniparty
+*.db
+.env
+.git
+README.md

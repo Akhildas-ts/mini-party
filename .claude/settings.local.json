@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go mod tidy:*)",
+      "Bash(npm create:*)",
+      "Bash(go build:*)",
+      "Bash(npx vite build)"
+    ]
+  }
+}
