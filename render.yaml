@@ -1,35 +1,28 @@
-# Render Blueprint for MiniParty Backend
-# This file enables Infrastructure as Code (IaC) deployment on Render
-# Docs: https://render.com/docs/blueprint-spec
-
 services:
   - type: web
-    name: miniparty-backend
+    name: miniparty-api
     runtime: docker
-    repo: https://github.com/YOUR_USERNAME/miniparty # Update this!
-    region: oregon # Choose: oregon, frankfurt, singapore, ohio
+    repo: https://github.com/Akhildas-ts/mini-party
     branch: main
     rootDir: backend
     dockerfilePath: ./Dockerfile
-    
-    # Free tier settings
+    region: oregon
     plan: free
-    
-    # Auto-deploy on push to main
     autoDeploy: true
-    
-    # Health check endpoint
-    healthCheckPath: /bookings
-    
-    # Environment variables
+    healthCheckPath: /book
+
     envVars:
-      - key: TURSO_DATABASE_URL
-        sync: false # Set manually in Render dashboard
-      - key: TURSO_AUTH_TOKEN
-        sync: false # Set manually in Render dashboard
+      # 1. Pulls your Turso URL and Token from the group you created
+      - fromGroup: miniparty_backend 
+
+      # 2. Random secret for admin access (Render creates this for you)
+      - key: ADMIN_SECRET
+        generateValue: true
+
+      # 3. Your Vercel URL (Update this if your Vercel URL changes)
       - key: CORS_ORIGIN
-        value: https://miniparty.vercel.app # Update with your Vercel URL
-      - key: PORT
-        value: 8080
+        value: https://miniparty.vercel.app
+
+      # 4. Gin production settings
       - key: GIN_MODE
         value: release
