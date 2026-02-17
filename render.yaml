@@ -21,7 +21,7 @@ services:
 
       # 3. Your Vercel URL (Update this if your Vercel URL changes)
       - key: CORS_ORIGIN
-        value: https://miniparty.vercel.app
+        value: https://mini-party.vercel.app
 
       # 4. Gin production settings
       - key: GIN_MODE
