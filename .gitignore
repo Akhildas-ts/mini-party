@@ -1,0 +1,30 @@
+# Node / Frontend
+node_modules/
+dist/
+.env
+.env.production
+*.log
+
+# Go / Backend
+bin/
+*.db
+*.exe
+*.out
+
+# Docker
+*.tar
+Dockerfile.dev
+
+# OS / Editor / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Claude / BMAD
+.claude/
+_bmad/
+
+# Misc
+temp/
+*.profraw
