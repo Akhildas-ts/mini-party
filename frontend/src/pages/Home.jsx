@@ -5,18 +5,30 @@ export default function Home() {
   const [backendStatus, setBackendStatus] = useState('waking') // 'waking' | 'ready' | 'error'
 
   useEffect(() => {
-    const controller = new AbortController()
+    let cancelled = false
+    let attempt = 0
+    const maxAttempts = 6 // retry up to 6 times (covers ~90s of cold start)
 
-    fetch(`${import.meta.env.VITE_API_URL}/health`, { signal: controller.signal })
-      .then((res) => {
-        if (res.ok) setBackendStatus('ready')
-        else setBackendStatus('error')
-      })
-      .catch((err) => {
-        if (err.name !== 'AbortError') setBackendStatus('error')
-      })
+    const ping = () => {
+      fetch(`${import.meta.env.VITE_API_URL}/health`)
+        .then((res) => {
+          if (cancelled) return
+          if (res.ok) setBackendStatus('ready')
+          else throw new Error('not ok')
+        })
+        .catch(() => {
+          if (cancelled) return
+          attempt++
+          if (attempt < maxAttempts) {
+            setTimeout(ping, 5000) // retry every 5 seconds
+          } else {
+            setBackendStatus('error')
+          }
+        })
+    }
 
-    return () => controller.abort()
+    ping()
+    return () => { cancelled = true }
   }, [])
 
   return (
