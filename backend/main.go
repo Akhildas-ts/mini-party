@@ -35,7 +35,12 @@ func main() {
 
 	// Health check — used by Render and Docker HEALTHCHECK
 	r.GET("/health", func(c *gin.Context) {
-		if err := db.DB.Ping(); err != nil {
+		sqlDB, err := db.DB.DB()
+		if err != nil {
+			c.JSON(http.StatusServiceUnavailable, gin.H{"status": "unhealthy", "error": err.Error()})
+			return
+		}
+		if err := sqlDB.Ping(); err != nil {
 			c.JSON(http.StatusServiceUnavailable, gin.H{"status": "unhealthy", "error": err.Error()})
 			return
 		}

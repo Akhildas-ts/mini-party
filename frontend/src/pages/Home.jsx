@@ -1,8 +1,38 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Home() {
+  const [backendStatus, setBackendStatus] = useState('waking') // 'waking' | 'ready' | 'error'
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    fetch(`${import.meta.env.VITE_API_URL}/health`, { signal: controller.signal })
+      .then((res) => {
+        if (res.ok) setBackendStatus('ready')
+        else setBackendStatus('error')
+      })
+      .catch((err) => {
+        if (err.name !== 'AbortError') setBackendStatus('error')
+      })
+
+    return () => controller.abort()
+  }, [])
+
   return (
     <main>
+      {/* Wake-up banner */}
+      {backendStatus === 'waking' && (
+        <div className="bg-purple-50 text-purple-700 text-center py-3 text-sm">
+          <span className="inline-block animate-spin mr-2">&#9881;</span>
+          Waking up our servers — this may take up to 30 seconds...
+        </div>
+      )}
+      {backendStatus === 'error' && (
+        <div className="bg-red-50 text-red-700 text-center py-3 text-sm">
+          Server is taking longer than usual. Please try again in a minute.
+        </div>
+      )}
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto px-4 py-20 text-center">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">

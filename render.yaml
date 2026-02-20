@@ -1,3 +1,8 @@
+databases:
+  - name: miniparty-db
+    plan: free
+    region: oregon
+
 services:
   - type: web
     name: miniparty-api
@@ -12,8 +17,11 @@ services:
     healthCheckPath: /health
 
     envVars:
-      # Pulls TURSO_DATABASE_URL and TURSO_AUTH_TOKEN from the env group
-      - fromGroup: miniparty_backend
+      # PostgreSQL connection string from the Render database
+      - key: DATABASE_URL
+        fromDatabase:
+          name: miniparty-db
+          property: connectionString
 
       # Admin password for the dashboard
       - key: ADMIN_SECRET

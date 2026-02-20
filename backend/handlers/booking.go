@@ -24,21 +24,10 @@ func CreateBooking(c *gin.Context) {
 		return
 	}
 
-	result, err := db.DB.Exec(
-		"INSERT INTO bookings (name, email, phone, date, time, duration, guests) VALUES (?, ?, ?, ?, ?, ?, ?)",
-		booking.Name, booking.Email, booking.Phone, booking.Date, booking.Time, booking.Duration, booking.Guests,
-	)
-	if err != nil {
+	if err := db.DB.Create(&booking).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save booking"})
 		return
 	}
-
-	id, err := result.LastInsertId()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve booking ID"})
-		return
-	}
-	booking.ID = id
 
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "Booking confirmed!",
@@ -47,20 +36,11 @@ func CreateBooking(c *gin.Context) {
 }
 
 func GetBookings(c *gin.Context) {
-	rows, err := db.DB.Query("SELECT id, name, email, phone, date, time, duration, guests FROM bookings ORDER BY date ASC, time ASC")
-	if err != nil {
+	var bookings []models.Booking
+
+	if err := db.DB.Order("date ASC, time ASC").Find(&bookings).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch bookings"})
 		return
-	}
-	defer rows.Close()
-
-	var bookings []models.Booking
-	for rows.Next() {
-		var b models.Booking
-		if err := rows.Scan(&b.ID, &b.Name, &b.Email, &b.Phone, &b.Date, &b.Time, &b.Duration, &b.Guests); err != nil {
-			continue
-		}
-		bookings = append(bookings, b)
 	}
 
 	c.JSON(http.StatusOK, bookings)

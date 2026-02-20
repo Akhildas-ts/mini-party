@@ -1,57 +1,41 @@
 package db
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"os"
 
-	_ "github.com/tursodatabase/libsql-client-go/libsql"
+	"miniparty-backend/models"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-var DB *sql.DB
+var DB *gorm.DB
 
 func Init() {
-	dbURL := os.Getenv("TURSO_DATABASE_URL")
-	authToken := os.Getenv("TURSO_AUTH_TOKEN")
-
-	if dbURL == "" || authToken == "" {
-		log.Fatal("TURSO_DATABASE_URL and TURSO_AUTH_TOKEN environment variables are required")
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		log.Fatal("DATABASE_URL environment variable is required")
 	}
-
-	dsn := fmt.Sprintf("%s?authToken=%s", dbURL, authToken)
 
 	var err error
-	DB, err = sql.Open("libsql", dsn)
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("Failed to open database:", err)
-	}
-
-	if err = DB.Ping(); err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	createTable := `
-	CREATE TABLE IF NOT EXISTS bookings (
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		name TEXT NOT NULL,
-		email TEXT NOT NULL,
-		phone TEXT NOT NULL,
-		date TEXT NOT NULL,
-		time TEXT NOT NULL,
-		duration INTEGER NOT NULL DEFAULT 2,
-		guests INTEGER NOT NULL
-	);`
-
-	if _, err = DB.Exec(createTable); err != nil {
-		log.Fatal("Failed to create table:", err)
+	if err = DB.AutoMigrate(&models.Booking{}); err != nil {
+		log.Fatal("Failed to migrate database:", err)
 	}
 
-	log.Println("Database initialized (Turso/libSQL)")
+	log.Println("Database initialized (PostgreSQL via GORM)")
 }
 
 func Close() {
 	if DB != nil {
-		DB.Close()
+		sqlDB, err := DB.DB()
+		if err == nil {
+			sqlDB.Close()
+		}
 	}
 }
