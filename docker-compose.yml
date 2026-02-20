@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: miniparty
+      POSTGRES_PASSWORD: miniparty
+      POSTGRES_DB: miniparty
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U miniparty"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgres://miniparty:miniparty@db:5432/miniparty?sslmode=disable
+      PORT: "8080"
+      CORS_ORIGIN: http://localhost:5173
+      ADMIN_SECRET: anildas@123
+      GIN_MODE: debug
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

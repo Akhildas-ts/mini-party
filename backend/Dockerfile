@@ -18,8 +18,8 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
 # ── Stage 2: Minimal runtime image (~7 MB base) ─────────────────
 FROM alpine:3.19
 
-# ca-certificates: required for TLS to *.turso.io
-# wget: used by the HEALTHCHECK probe
+# ca-certificates: required for TLS to PostgreSQL
+# wget: included in Alpine busybox, used by the HEALTHCHECK probe
 RUN apk add --no-cache ca-certificates
 
 # Non-root user for security
