@@ -31,6 +31,10 @@ services:
       - key: CORS_ORIGIN
         value: https://mini-party.vercel.app
 
+      # Custom domain
+      - key: CORS_ORIGIN_2
+        value: https://miniparty.in
+
       # Gin production mode
       - key: GIN_MODE
         value: release

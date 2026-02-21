@@ -20,14 +20,17 @@ func main() {
 
 	r := gin.Default()
 
-	// CORS — allow configurable origin, default to localhost for dev
-	allowedOrigin := os.Getenv("CORS_ORIGIN")
-	if allowedOrigin == "" {
-		allowedOrigin = "http://localhost:5173"
+	// CORS — allow multiple origins (custom domain + Vercel + localhost)
+	origins := []string{"http://localhost:5173"}
+	if env := os.Getenv("CORS_ORIGIN"); env != "" {
+		origins = append(origins, env)
+	}
+	if env := os.Getenv("CORS_ORIGIN_2"); env != "" {
+		origins = append(origins, env)
 	}
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{allowedOrigin},
+		AllowOrigins:     origins,
 		AllowMethods:     []string{"GET", "POST"},
 		AllowHeaders:     []string{"Content-Type", "X-Admin-Token"},
 		AllowCredentials: true,
