@@ -31,7 +31,7 @@ func main() {
 
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     origins,
-		AllowMethods:     []string{"GET", "POST"},
+		AllowMethods:     []string{"GET", "POST", "DELETE"},
 		AllowHeaders:     []string{"Content-Type", "X-Admin-Token"},
 		AllowCredentials: true,
 	}))
@@ -53,6 +53,7 @@ func main() {
 	// API routes
 	r.POST("/book", handlers.CreateBooking)
 	r.GET("/bookings", middleware.AdminAuth(), handlers.GetBookings)
+	r.DELETE("/bookings/:id", middleware.AdminAuth(), handlers.DeleteBooking)
 
 	// Serve React static files in production
 	distPath := "./dist"

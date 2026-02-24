@@ -28,3 +28,6 @@ _bmad/
 # Misc
 temp/
 *.profraw
+
+# Project folders
+docks/

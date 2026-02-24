@@ -79,6 +79,27 @@ export default function AdminDashboard() {
     setToken('')
   }
 
+  const handleDelete = async (id, name) => {
+    if (!window.confirm(`Are you sure you want to delete the booking for "${name}"?`)) return
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/bookings/${id}`, {
+        method: 'DELETE',
+        headers: { 'X-Admin-Token': token },
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        alert(data.error || 'Failed to delete booking.')
+        return
+      }
+
+      setBookings((prev) => prev.filter((b) => b.id !== id))
+    } catch {
+      alert('Could not connect to server.')
+    }
+  }
+
   const totalGuests = bookings.reduce((sum, b) => sum + b.guests, 0)
 
   // --- Login Gate ---
@@ -191,6 +212,7 @@ export default function AdminDashboard() {
                   <th className="px-4 py-3 font-semibold hidden sm:table-cell">Email</th>
                   <th className="px-4 py-3 font-semibold hidden sm:table-cell">Phone</th>
                   <th className="px-4 py-3 font-semibold hidden sm:table-cell">Duration</th>
+                  <th className="px-4 py-3 font-semibold text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -208,6 +230,14 @@ export default function AdminDashboard() {
                     <td className="px-4 py-3 text-gray-700 hidden sm:table-cell">{b.email}</td>
                     <td className="px-4 py-3 text-gray-700 hidden sm:table-cell">{b.phone}</td>
                     <td className="px-4 py-3 text-gray-700 hidden sm:table-cell">{b.duration}h</td>
+                    <td className="px-4 py-3 text-center">
+                      <button
+                        onClick={() => handleDelete(b.id, b.name)}
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50 px-3 py-1.5 rounded-lg text-sm font-medium transition"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

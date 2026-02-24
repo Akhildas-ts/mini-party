@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Home() {
@@ -123,24 +123,6 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <h3 className="text-xl font-bold text-white mb-2">
-            Anil New Icespot Palakkad
-          </h3>
-          <p className="text-gray-400 mb-4">Owner: Anil Das</p>
-          <p className="text-gray-400 mb-2">Icespot, Palakkad</p>
-          <p>
-            <a
-              href="tel:9074696823"
-              className="text-purple-400 hover:text-purple-300 transition font-medium"
-            >
-              9074696823
-            </a>
-          </p>
-        </div>
-      </footer>
     </main>
   )
 }
