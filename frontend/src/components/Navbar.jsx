@@ -69,7 +69,7 @@ export default function Navbar() {
                   </a>
 
                   <a
-                    href="mailto:anilnewicespot@gmail.com"
+                    href="mailto:palakkadicespot@gmail.com"
                     className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-purple-50 transition group"
                   >
                     <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center group-hover:bg-purple-200 transition">
