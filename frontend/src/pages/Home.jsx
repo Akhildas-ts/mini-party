@@ -47,9 +47,18 @@ export default function Home() {
       )}
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-          Make Every Party
-          <span className="text-purple-600"> Unforgettable</span>
+        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+          <span
+            className="font-extrabold"
+            style={{
+              color: '#FFFFFF',
+              WebkitTextStroke: '5px #9C2C8A',
+              paintOrder: 'stroke fill',
+            }}
+          >
+            IceSpot
+          </span>
+          <span className="text-purple-600"> Palakkad</span>
         </h1>
         <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
           Book your private party venue in minutes. We handle the setup,
@@ -69,17 +78,29 @@ export default function Home() {
           <FeatureCard
             title="Private Venue"
             description="Exclusive space for your group with customizable layouts and decorations."
-            icon="🏠"
+            icon={
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3L2 12h3v8h6v-5h2v5h6v-8h3L12 3z" />
+              </svg>
+            }
           />
           <FeatureCard
-            title="Flexible Hours"
-            description="Book from 1 to 8 hours. Morning brunch parties to late-night celebrations."
-            icon="⏰"
+            title="Chill & Celebrate"
+            description="Enjoy your favorite ice creams with friends while we set the perfect party mood."
+            icon={
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C9.5 2 7.5 4 7.5 6.5c0 .5.1 1 .2 1.5H6a2 2 0 00-2 2v1a2 2 0 002 2h.5L8 22h8l1.5-9H18a2 2 0 002-2v-1a2 2 0 00-2-2h-1.7c.1-.5.2-1 .2-1.5C16.5 4 14.5 2 12 2z" />
+              </svg>
+            }
           />
           <FeatureCard
             title="Easy Booking"
             description="Pick your date, time, and guest count. Confirmed in seconds."
-            icon="✅"
+            icon={
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+            }
           />
         </div>
       </section>
@@ -130,7 +151,11 @@ export default function Home() {
 function FeatureCard({ title, description, icon }) {
   return (
     <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition text-center">
-      <div className="text-4xl mb-4">{icon}</div>
+      <div className="mb-4 flex justify-center">
+        <div className="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center">
+          {icon}
+        </div>
+      </div>
       <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
       <p className="text-gray-600">{description}</p>
     </div>
