@@ -3,7 +3,6 @@ import { Link, useLocation, Navigate } from 'react-router-dom'
 export default function Confirmation() {
   const { state } = useLocation()
   const booking = state?.booking
-
   if (!booking) {
     return <Navigate to="/" replace />
   }
@@ -17,7 +16,7 @@ export default function Confirmation() {
           Thanks, {booking.name}! Your party is booked. Here are the details:
         </p>
 
-        <div className="bg-purple-50 rounded-xl p-6 text-left space-y-3 mb-8">
+        <div className="bg-purple-50 rounded-xl p-6 text-left space-y-3 mb-4">
           <Detail label="Booking ID" value={`#${booking.id}`} />
           <Detail label="Date" value={booking.date} />
           <Detail label="Time" value={booking.time} />
@@ -25,6 +24,16 @@ export default function Confirmation() {
           <Detail label="Guests" value={booking.guests} />
           <Detail label="Email" value={booking.email} />
           <Detail label="Phone" value={booking.phone} />
+        </div>
+
+        <div className="bg-gradient-to-r from-purple-600 to-pink-500 rounded-xl p-5 text-white mb-8">
+          <div className="flex items-center justify-between">
+            <div className="text-left">
+              <p className="text-sm text-purple-100">Total Price</p>
+              <p className="text-xs text-purple-200">{booking.duration} {booking.duration > 1 ? 'hours' : 'hour'} &times; &#8377;100/hr</p>
+            </div>
+            <p className="text-3xl font-bold">&#8377;{booking.duration * 100}</p>
+          </div>
         </div>
 
         <p className="text-sm text-gray-500 mb-6">

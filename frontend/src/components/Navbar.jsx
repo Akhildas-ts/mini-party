@@ -20,7 +20,7 @@ export default function Navbar() {
     <nav className="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold text-purple-700">
-          MiniParty
+          Mini Party
         </Link>
 
         <div className="flex items-center gap-4">

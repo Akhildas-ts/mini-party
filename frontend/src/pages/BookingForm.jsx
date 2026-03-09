@@ -59,7 +59,8 @@ export default function BookingForm() {
   return (
     <main className="max-w-2xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Book Your Party</h1>
-      <p className="text-gray-600 mb-8">Fill in the details below and we'll confirm your booking instantly.</p>
+      <p className="text-gray-600 mb-2">Fill in the details below and we'll confirm your booking instantly.</p>
+      <p className="text-sm text-purple-600 font-medium mb-8">Flat rate: &#8377;100/hr &middot; No hidden fees</p>
 
       {errors.length > 0 && (
         <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl p-4 mb-6">
@@ -110,6 +111,17 @@ export default function BookingForm() {
             min="1"
             max="100"
           />
+        </div>
+
+        {/* Live Price Estimate */}
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-5">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500">Estimated Total</p>
+              <p className="text-xs text-gray-400 mt-0.5">{Number(form.duration)} {Number(form.duration) === 1 ? 'hour' : 'hours'} &times; &#8377;100/hr</p>
+            </div>
+            <p className="text-3xl font-bold text-purple-700">&#8377;{Number(form.duration) * 100}</p>
+          </div>
         </div>
 
         <button
