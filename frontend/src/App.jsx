@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import Home from './pages/Home'
 import BookingForm from './pages/BookingForm'
 import Confirmation from './pages/Confirmation'
@@ -16,6 +17,7 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/manage-bookings" element={<AdminDashboard />} />
       </Routes>
+      <Footer />
     </div>
   )
 }
